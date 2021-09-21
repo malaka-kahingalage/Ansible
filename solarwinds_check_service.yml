@@ -1,0 +1,75 @@
+---
+- name: Check Solarwind services
+  hosts: SolarWinds_App
+  gather_facts: no
+
+  tasks:
+  - name: Check Solarwind services for Polling Eng
+    when: inventory_hostname in groups['SolarWinds_Polling_Eng']
+    win_service:
+      name: "{{item}}"
+      state: started
+    with_items:
+      - SolarWindsAdministration
+      - SolarWindsAgent64
+      - SolarWindsCortex
+      - SolarWindsHighAvailability
+      - SolarWindsLogPollingService
+      - SolarWindsRecommendations
+      - SolarWindsSyslogService
+      - SolarWindsTrapService
+      - SWCollectorService
+      - SWInfoServiceSvcV3
+      - SWJMXBridgeSvc
+      - SWJobEngineSvc2
+      - OrionModuleEngine
+      - NetFlowService
+
+
+  - name: Check Solarwind services for Main Eng
+    when: inventory_hostname in groups['SolarWinds_Main_App']
+    win_service:
+      name: "{{item}}"
+      state: started
+    with_items:
+      - SolarWinds SFTP Server
+      - SolarWinds TFTP Server
+      - SolarWindsAdministration
+      - SolarWindsAgent64
+      - SolarWindsAlertingServiceV2
+      - SolarWindsCortex
+      - SolarWindsHighAvailability
+      - SolarWindsLogPollingService
+      - SolarWindsRecommendations
+      - SolarWindsSyslogService
+      - SolarWindsTrapService
+      - SWCollectorService
+      - SWInfoServiceSvcV3
+      - SWJMXBridgeSvc
+      - SWJobEngineSvc2
+      - OrionModuleEngine
+      - NetFlowService
+
+
+  - name: Check Solarwind services in HA Eng
+    when: inventory_hostname in groups['SolarWinds_HA_App']
+    win_service:
+      name: "{{item}}"
+      state: started
+    with_items:
+      - OrionModuleEngine
+      - SolarWinds TFTP Server
+      - SolarWindsAdministration
+      - SolarWindsHighAvailability
+      - SolarWindsAgent64
+
+
+  - name: Check Solarwind services in HA Polling Eng
+    when: inventory_hostname in groups['SolarWinds_HA_Polling_Eng']
+    win_service:
+      name: "{{item}}"
+      state: started
+    with_items:
+      - OrionModuleEngine
+      - SolarWinds TFTP Server
+      - SolarWindsAdministration
